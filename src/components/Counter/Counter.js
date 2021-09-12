@@ -8,8 +8,7 @@ const Counter = (props) => {
   return (
     <div>
       <h2 data-test="title-count" value={count}>
-        {' '}
-        The count is: {count}{' '}
+        The count is: {count}
       </h2>
       <button data-test="increment-btn" onClick={increment}>
         +

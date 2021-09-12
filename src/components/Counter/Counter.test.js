@@ -30,13 +30,13 @@ const findByTestAttr = (wrapper, val) => {
 const wrapper = setup(<Counter />);
 
 test('renders Counter without crashing', () => {
-  console.log(wrapper.debug()); // Debug returns the Counter DOM as string :)
+  // console.log(wrapper.debug()); // Debug returns the Counter DOM as string :)
   expect(wrapper).toBeTruthy();
 });
 
 test('renders an h2 counter display element', () => {
   const titleCounter = findByTestAttr(wrapper, 'title-count');
-  console.log(`titleCounter:`, titleCounter.debug());
+  // console.log(`titleCounter:`, titleCounter.debug());
   expect(titleCounter.length).toBe(1);
 });
 
@@ -50,17 +50,21 @@ test('renders decrement button', () => {
   expect(decrementBtn.length).toBe(1);
 });
 
-test('counter starts at 0', () => {
-  // Problem: Enzyme can only check state of CLASS components
+test('renders The count is: 0', () => {
+  // Problem: Enzyme can only check state of CLASS components. Instead, will try to check it's effect (what text will it render inside h2):
+  const titleCounter = findByTestAttr(wrapper, 'title-count');
+  // console.log(`titleCounter.text()`, titleCounter.text());
+  expect(titleCounter.text()).toEqual('The count is: 0');
 });
 
 test('clicking button INCREMENTS counter display', () => {
-  // https://blog.logrocket.com/testing-state-changes-in-react-functional-components/
+  // Problem: Enzyme can only check state of CLASS componentshttps://blog.logrocket.com/testing-state-changes-in-react-functional-components/
   const counterIncrement = jest.fn();
-  const wrapper = shallow(<Counter onClick={counterIncrement} />);
+  console.log(`counterIncrement`, Boolean(counterIncrement));
+  const wrapperWithState = setup(<Counter />, counterIncrement);
   const handleClick = jest.spyOn(React, 'useState');
   handleClick.mockImplementation((count) => [count, counterIncrement]);
 
-  wrapper.find("[data-test='increment-btn']").simulate('click');
+  wrapperWithState.find("[data-test='increment-btn']").simulate('click');
   expect(counterIncrement).toBeTruthy();
 });
