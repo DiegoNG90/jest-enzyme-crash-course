@@ -27,7 +27,7 @@ const findByTestAttr = (wrapper, val) => {
   return wrapper.find(`[data-test="${val}"]`);
 };
 
-const wrapper = setup(<Counter />);
+const wrapper = setup();
 
 test('renders Counter without crashing', () => {
   // console.log(wrapper.debug()); // Debug returns the Counter DOM as string :)
