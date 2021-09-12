@@ -8,8 +8,12 @@ const Counter = () => {
   return (
     <div>
       <h2 data-test="title-count"> The count is: {count} </h2>
-      <button onClick={increment}>+</button>
-      <button onClick={decrement}>-</button>
+      <button data-test="increment-btn" onClick={increment}>
+        +
+      </button>
+      <button data-test="decrement-btn" onClick={decrement}>
+        -
+      </button>
     </div>
   );
 };
