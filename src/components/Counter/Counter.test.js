@@ -51,14 +51,15 @@ test('renders decrement button', () => {
 });
 
 test('renders The count is: 0', () => {
-  // Problem: Enzyme can only check state of CLASS components. Instead, will try to check it's effect (what text will it render inside h2):
+  // Resolved problem: Enzyme can only check state of CLASS components. Instead, will try to check it's effect (what text will it render inside h2):
   const titleCounter = findByTestAttr(wrapper, 'title-count');
   // console.log(`titleCounter.text()`, titleCounter.text());
   expect(titleCounter.text()).toEqual('The count is: 0');
 });
 
 test('clicking button INCREMENTS counter display', () => {
-  // Problem: Enzyme can only check state of CLASS componentshttps://blog.logrocket.com/testing-state-changes-in-react-functional-components/
+  // Problem: Enzyme can only check state of CLASS components
+  // https://blog.logrocket.com/testing-state-changes-in-react-functional-components/
   const counterIncrement = jest.fn();
   console.log(`counterIncrement`, Boolean(counterIncrement));
   const wrapperWithState = setup(<Counter />, counterIncrement);
