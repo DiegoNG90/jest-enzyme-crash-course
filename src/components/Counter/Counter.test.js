@@ -1,3 +1,4 @@
+import React from 'react';
 import Enzyme, { shallow, ShallowWrapper } from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
 
@@ -49,6 +50,17 @@ test('renders decrement button', () => {
   expect(decrementBtn.length).toBe(1);
 });
 
-test('counter starts at 0', () => {});
+test('counter starts at 0', () => {
+  // Problem: Enzyme can only check state of CLASS components
+});
 
-test('clicking button INCREMENTS counter display', () => {});
+test('clicking button INCREMENTS counter display', () => {
+  // https://blog.logrocket.com/testing-state-changes-in-react-functional-components/
+  const counterIncrement = jest.fn();
+  const wrapper = shallow(<Counter onClick={counterIncrement} />);
+  const handleClick = jest.spyOn(React, 'useState');
+  handleClick.mockImplementation((count) => [count, counterIncrement]);
+
+  wrapper.find("[data-test='increment-btn']").simulate('click');
+  expect(counterIncrement).toBeTruthy();
+});
