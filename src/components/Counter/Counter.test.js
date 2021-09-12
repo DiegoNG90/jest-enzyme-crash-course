@@ -51,21 +51,18 @@ test('renders decrement button', () => {
 });
 
 test('renders The count is: 0', () => {
-  // Resolved problem: Enzyme can only check state of CLASS components. Instead, will try to check it's effect (what text will it render inside h2):
+  // Resolved problem: Enzyme can only check state of CLASS components. Instead, will try to check the initial state that should be render in the UI (what text will it render inside h2, which should be 0):
   const titleCounter = findByTestAttr(wrapper, 'title-count');
   // console.log(`titleCounter.text()`, titleCounter.text());
   expect(titleCounter.text()).toEqual('The count is: 0');
 });
 
 test('clicking button INCREMENTS counter display', () => {
-  // Problem: Enzyme can only check state of CLASS components
-  // https://blog.logrocket.com/testing-state-changes-in-react-functional-components/
-  const counterIncrement = jest.fn();
-  console.log(`counterIncrement`, Boolean(counterIncrement));
-  const wrapperWithState = setup(<Counter />, counterIncrement);
-  const handleClick = jest.spyOn(React, 'useState');
-  handleClick.mockImplementation((count) => [count, counterIncrement]);
-
-  wrapperWithState.find("[data-test='increment-btn']").simulate('click');
-  expect(counterIncrement).toBeTruthy();
+  // Resolved problem: Enzyme can only check state of CLASS components. Instead, will try to check the updated state that should be re-render in the UI (what text will it render inside h2, which should be 1 after click event :)):
+  // 1) Event
+  wrapper.find("[data-test='increment-btn']").simulate('click');
+  // 2) Find title-count h2 inside wrapper
+  const titleCounterAfterReRender = findByTestAttr(wrapper, 'title-count');
+  // 3) Check if the test is equal to...
+  expect(titleCounterAfterReRender.text()).toEqual('The count is: 1');
 });
