@@ -57,7 +57,7 @@ test('renders The count is: 0', () => {
   expect(titleCounter.text()).toEqual('The count is: 0');
 });
 
-test('clicking button INCREMENTS counter display', () => {
+test('clicking INCREMENTS button should set counter display at 1', () => {
   // Resolved problem: Enzyme can only check state of CLASS components. Instead, will try to check the updated state that should be re-render in the UI (what text will it render inside h2, which should be 1 after click event :)):
   // 1) Event
   wrapper.find("[data-test='increment-btn']").simulate('click');
@@ -65,4 +65,15 @@ test('clicking button INCREMENTS counter display', () => {
   const titleCounterAfterReRender = findByTestAttr(wrapper, 'title-count');
   // 3) Check if the test is equal to...
   expect(titleCounterAfterReRender.text()).toEqual('The count is: 1');
+});
+
+// Tuto homework: Do the decrement Button. Take notice that, since previous test simulates a click on INCREMENT, the actual render for the following test will be "The count is: 1" (instead of being set at 0)
+test('clicking DECREMENT button should set counter display back to 0', () => {
+  wrapper.find("[data-test='decrement-btn']").simulate('click');
+  let titleCounterAfterReRender = findByTestAttr(wrapper, 'title-count');
+  console.log(
+    `After titleCounterAfterReRender`,
+    titleCounterAfterReRender.text()
+  );
+  expect(titleCounterAfterReRender.text()).toEqual('The count is: 0');
 });
